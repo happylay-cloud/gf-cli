@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	emptyProject     = "github.com/gogf/gf-empty"
+	emptyProject     = "github.com/happylay-cloud/gf-empty"
 	emptyProjectName = "gf-empty"
 )
 
@@ -62,19 +62,9 @@ func Run() {
 		}
 	}
 	mlog.Print("正在初始化...")
-	// MD5 retrieving.
-	respMd5, err := ghttp.Get(homeUrl + "/cli/project/md5")
-	if err != nil {
-		mlog.Fatalf("获取项目zip md5失败: %s", err.Error())
-	}
-	defer respMd5.Close()
-	md5DataStr := respMd5.ReadAllString()
-	if md5DataStr == "" {
-		mlog.Fatal("获取项目zip md5失败：md5值为空。可能是网络问题，再试一次？")
-	}
 
 	// Zip data retrieving.
-	respData, err := ghttp.Get(cdnUrl + "/cli/project/zip?" + md5DataStr)
+	respData, err := ghttp.Get("https://github.com/happylay-cloud/gf-empty/archive/master.zip")
 	if err != nil {
 		mlog.Fatal("获取项目zip数据失败：%s", err.Error())
 	}

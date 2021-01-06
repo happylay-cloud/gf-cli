@@ -24,31 +24,25 @@ const (
 
 func Help() {
 	mlog.Print(gstr.TrimLeft(`
-USAGE    
-    gf swagger [OPTION]
+用法    
+    gf swagger [选项]
 
-OPTION
-    -s, --server  start a swagger server at specified address after swagger files
-                  produced
-    -o, --output  the output directory for storage parsed swagger files,
-                  the default output directory is "./swagger"
-    -/--pack      auto parses and packs swagger into packed/swagger.go. 
+选项
+    -s, --server  在生成swagger文件之后，在指定的地址启动swagger服务器。
+    -o, --output  存储已解析的swagger文件的输出目录，默认输出目录是"./swagger"。
+    -/--pack      自动将swagger解析并将其打包到packed/swagger.go。 
 
-EXAMPLES
+示例
     gf swagger
     gf swagger --pack
     gf swagger -s 8080
     gf swagger -s 127.0.0.1:8080
     gf swagger -o ./document/swagger
 
-
-DESCRIPTION
-    The "swagger" command parses the current project and produces swagger API description 
-    files, which can be used in swagger API server. If used with "-s/--server" option, it
-    watches the changes of go files of current project and reproduces the swagger files,
-    which is quite convenient for local API development.
-    If it fails in command "swag", please firstly check your system PATH whether containing 
-    go binary path, or you can install the "swag" tool manually referring to: 
+说明
+    "swagger"命令用于解析当前项目，并生成swagger api描述文件，可在swagger api服务器中使用。 
+    如果与"-s/--server"选项一起使用，则监视当前项目的go文件的更改，并复制swagger文件，这对于本地API开发非常方便。
+    如果命令"swag"失败，请首先检查系统路径是否包含go二进制路径，也可以参考以下内容手动安装"swag"工具：
     https://github.com/swaggo/swag
 `))
 }
@@ -81,12 +75,12 @@ func Run() {
 		}
 		// With some delay in case of multiple code changes in very short interval.
 		gtimer.SetTimeout(1500*gtime.MS, func() {
-			mlog.Printf(`go file changes: %s`, event.String())
-			mlog.Print(`reproducing swagger files...`)
+			mlog.Printf(`go文件改变：%s`, event.String())
+			mlog.Print(`复制swagger文件...`)
 			if err := generateSwaggerFiles(output, parser.ContainsOpt("pack")); err != nil {
 				mlog.Print(err)
 			} else {
-				mlog.Print(`done!`)
+				mlog.Print(`完成！`)
 			}
 			dirty.Set(false)
 		})
@@ -108,7 +102,7 @@ func Run() {
 
 // generateSwaggerFiles generates necessary swagger files.
 func generateSwaggerFiles(output string, pack bool) error {
-	mlog.Print(`producing swagger files...`)
+	mlog.Print(`生成swagger文件...`)
 	// Temporary storing swagger files directory.
 	tempOutputPath := gfile.Join(gfile.TempDir(), "swagger")
 	if gfile.Exists(tempOutputPath) {
@@ -141,7 +135,7 @@ func generateSwaggerFiles(output string, pack bool) error {
 	); err != nil {
 		return err
 	}
-	mlog.Print(`done!`)
+	mlog.Print(`完成！`)
 	// Auto pack into go file.
 	if pack && gfile.Exists("swagger") {
 		packCmd := fmt.Sprintf(`gf pack %s packed/%s -n packed`, "swagger", PackedGoFileName)

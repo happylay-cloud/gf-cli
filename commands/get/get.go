@@ -10,13 +10,13 @@ import (
 
 func Help() {
 	mlog.Print(gstr.TrimLeft(`
-USAGE    
-    gf get PACKAGE
+用法    
+    gf get 包
 
-ARGUMENT 
-    PACKAGE  remote golang package path, eg: github.com/gogf/gf
+主题 
+    包 远程golang包路径，例如: github.com/gogf/gf。
 
-EXAMPLES
+示例
     gf get github.com/gogf/gf
     gf get github.com/gogf/gf@latest
     gf get github.com/gogf/gf@master

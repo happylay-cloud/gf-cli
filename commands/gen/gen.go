@@ -9,30 +9,26 @@ import (
 
 func Help() {
 	mlog.Print(gstr.TrimLeft(`
-USAGE 
-    gf gen TYPE [OPTION]
+用法 
+    gf gen 类型 [选项]
 
-TYPE
-    dao     generate dao and model files.
-    model   generate model files, note that these generated model files are different from model files 
-            of command "gf gen dao".
+类型
+    dao     生成dao和model文件。
+    model   生成model文件，请注意这些生成的model文件不同于"gf gen dao"命令生成的model文件。
 
-OPTION
-    -/--path             directory path for generated files.
-    -l, --link           database configuration, please refer to: https://goframe.org/database/gdb/config
-    -t, --tables         generate models only for given tables, multiple table names separated with ',' 
-    -g, --group          specifying the configuration group name for database,
-                         it's not necessary and the default value is "default"
-    -c, --config         used to specify the configuration file for database, it's commonly not necessary.
-                         If "-l" is not passed, it will search "./config.toml" and "./config/config.toml" 
-                         in current working directory in default.
-    -p, --prefix         add prefix for all table of specified link/database tables.
-    -r, --remove-prefix  remove specified prefix of the table, multiple prefix separated with ',' 
-    -m, --mod            module name for generated golang file imports.
+选项
+    -/--path             生成文件的目录路径。
+    -l, --link           数据库配置，请参考：https://goframe.org/database/gdb/config
+    -t, --tables         仅为给定的表生成模型，多个表名用','分隔。
+    -g, --group          指定数据库的配置组名，这是不必要的，默认值是"default"。
+    -c, --config         用于指定数据库的配置文件，通常不需要。
+                         如果没有通过"-l"，它将搜索"./config.toml"和"./config/config.toml"，默认在当前工作目录。
+    -p, --prefix         为指定链接/数据库表的所有表添加前缀。
+    -r, --remove-prefix  删除表的指定前缀，多个前缀以','分隔。 
+    -m, --mod            生成的golang文件导入的模块名。
                   
-CONFIGURATION SUPPORT
-    Options are also supported by configuration file. The configuration node name is "gf.gen", which also supports
-    multiple databases, for example:
+配置支持
+    配置文件也支持选项。配置节点名为"gf.gen"，它也支持多个数据库，例如:
     [gfcli]
         [[gfcli.gen.dao]]
             link   = "mysql:root:12345678@tcp(127.0.0.1:3306)/test"
@@ -43,7 +39,7 @@ CONFIGURATION SUPPORT
             prefix = "primary_"
             tables = "user, userDetail"
 
-EXAMPLES
+示例
     gf gen dao
         gf gen dao
         gf gen dao -l "mysql:root:12345678@tcp(127.0.0.1:3306)/test"
@@ -55,11 +51,8 @@ EXAMPLES
         gf gen model -path ./model -c config.yaml -g user-center -t user,user_detail,user_login
         gf gen model -r user_
 
-        
-
-DESCRIPTION
-    The "gen" command is designed for multiple generating purposes.
-    It's currently supporting generating go files for ORM models.
+说明
+    "gen"命令具有多种用途。它目前支持为ORM模型生成go文件。
 `))
 }
 

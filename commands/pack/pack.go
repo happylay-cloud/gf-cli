@@ -13,19 +13,18 @@ import (
 
 func Help() {
 	mlog.Print(gstr.TrimLeft(`
-USAGE 
+用法 
     gf pack SRC DST
 
-ARGUMENT
-    SRC  source path for packing, which can be multiple source paths.
-    DST  destination file path for packed file. if extension of the filename is ".go" and "-n" option is given, 
-         it enables packing SRC to go file, or else it packs SRC into a binary file.
+主题
+    SRC  打包的源路径，可以是多个源路径。
+    DST  打包文件的目标文件路径。如果文件名的扩展名是".go"，并且给出了"-n”选项，则它允许将SRC打包到文件中，否则将SRC打包到二进制文件中。
 
-OPTION
-    -n, --name      package name for output go file, it's set as its directory name if no name passed
-    -p, --prefix    prefix for each file packed into the resource file
+选项
+    -n, --name      输出go文件的包名，如果没有传递名称，则设置为其目录名。
+    -p, --prefix    打包到资源文件中的每个文件的前缀。
 
-EXAMPLES
+示例
     gf pack public data.bin
     gf pack public,template data.bin
     gf pack public,template packed/data.go
@@ -46,16 +45,16 @@ func Run() {
 	srcPath := parser.GetArg(2)
 	dstPath := parser.GetArg(3)
 	if srcPath == "" {
-		mlog.Fatal("SRC path cannot be empty")
+		mlog.Fatal("SRC路径不能为空")
 	}
 	if dstPath == "" {
-		mlog.Fatal("DST path cannot be empty")
+		mlog.Fatal("DST路径不能为空")
 	}
 	if gfile.Exists(dstPath) && gfile.IsDir(dstPath) {
-		mlog.Fatalf("DST path '%s' cannot be a directory", dstPath)
+		mlog.Fatalf("DST路径'%s'不能为目录", dstPath)
 	}
 	if !gfile.IsEmpty(dstPath) && !allyes.Check() {
-		s := gcmd.Scanf("path '%s' is not empty, files might be overwrote, continue? [y/n]: ", dstPath)
+		s := gcmd.Scanf("路径'%s'不为空，文件可能被覆盖，继续？[y/n]: ", dstPath)
 		if strings.EqualFold(s, "n") {
 			return
 		}
@@ -69,12 +68,12 @@ func Run() {
 	}
 	if name != "" {
 		if err := gres.PackToGoFile(srcPath, dstPath, name, prefix); err != nil {
-			mlog.Fatalf("pack failed: %v", err)
+			mlog.Fatalf("打包失败：%v", err)
 		}
 	} else {
 		if err := gres.PackToFile(srcPath, dstPath, prefix); err != nil {
-			mlog.Fatalf("pack failed: %v", err)
+			mlog.Fatalf("打包失败：%v", err)
 		}
 	}
-	mlog.Print("done!")
+	mlog.Print("完成！")
 }

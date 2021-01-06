@@ -15,7 +15,7 @@ func Run() {
 		mlog.Fatal(err)
 	}
 	if result == "" {
-		mlog.Fatal(`retrieving Golang environment variables failed, did you install Golang?`)
+		mlog.Fatal(`检索Golang环境变量失败，您是否安装了Golang？`)
 	}
 	var (
 		lines  = gstr.Split(result, "\n")
@@ -32,7 +32,7 @@ func Run() {
 		}
 		match, _ := gregex.MatchString(`(.+?)=(.*)`, line)
 		if len(match) < 3 {
-			mlog.Fatalf(`invalid Golang environment variable: "%s"`, line)
+			mlog.Fatalf(`无效的Golang环境变量："%s"`, line)
 		}
 		array = append(array, []string{gstr.Trim(match[1]), gstr.Trim(match[2])})
 	}

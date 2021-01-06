@@ -12,16 +12,14 @@ import (
 
 func Help() {
 	mlog.Print(gstr.TrimLeft(`
-USAGE 
-    gf mod ARGUMENT
+用法 
+    gf mod 主题
 
-ARGUMENT
-    path  copy all packages with its latest version in Go modules, which does not exist 
-          in GOPATH, to GOPATH. This enables your project using GOPATH building, but you 
-          should have GOPATH environment variable configured.
+主题
+    路径 将Go模块中最新版本（GOPATH中不存在）的所有包复制到GOPATH。这样您的项目能够使用GOPATH来构建，但是你首先应该配置GOPATH环境变量。
 
-EXAMPLES
-    gf mod path
+示例
+    gf mod 路径
 `))
 }
 

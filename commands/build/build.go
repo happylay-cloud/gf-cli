@@ -60,26 +60,26 @@ const (
 
 func Help() {
 	mlog.Print(gstr.TrimLeft(`
-USAGE 
-    gf build FILE [OPTION]
+用法 
+    gf build 文件 [选项]
 
-ARGUMENT
-    FILE  building file path.
+主题
+    文件  构建文件路径。
 
-OPTION
-    -n, --name       output binary name
-    -v, --version    output binary version
-    -a, --arch       output binary architecture, multiple arch separated with ','
-    -s, --system     output binary system, multiple os separated with ','
-    -o, --output     output binary path, used when building single binary file
-    -p, --path       output binary directory path, default is './bin'
-    -e, --extra      extra custom "go build" options
-    -m, --mod        like "-mod" option of "go build", use "-m none" to disable go module
-    -c, --cgo        enable or disable cgo feature, it's disabled in default
-    --pack           pack specified folder into packed/data.go before building.
-    --swagger        auto parse and pack swagger into packed/swagger.go before building.
+选项
+    -n, --name       生成的可执行文件名称。如果是windows平台，那么默认会加上.exe后缀。
+    -v, --version    程序版本，如果指定版本信息，那么程序生成的路径中会多一层以版本名称的目录。
+    -a, --arch       编译架构，多个以,号分隔，如果是all表示编译所有支持架构。
+    -s, --system     编译平台，多个以,号分隔，如果是all表示编译所有支持平台。
+    -o, --output     输出的可执行文件路径，当该参数指定时，name和path参数失效，常用于编译单个可执行文件。
+    -p, --path       编译可执行文件存储的目录地址，默认是'./bin'。
+    -e, --extra      额外自定义的编译参数，会直接传递给go build命令。
+    -m, --mod        同go build -mod编译选项，使用"-m none"禁用go module。
+    -c, --cgo        是否开启cgo特性，默认是关闭的。如果开启，那么交叉编译可能会有问题。
+    --pack           go打包前，将需要打包的目录，多个以,号分隔，生成到packed/data.go。
+    --swagger        go打包前，自动解析并将swagger打包到pack/swagger中。
 
-EXAMPLES
+示例
     gf build main.go
     gf build main.go --swagger
     gf build main.go --pack public,template
@@ -89,15 +89,14 @@ EXAMPLES
     gf build main.go -n my-app -a amd64,386 -s linux -p .
     gf build main.go -n my-app -v 1.0 -a amd64,386 -s linux,windows,darwin -p ./docker/bin
 
-DESCRIPTION
-    The "build" command is most commonly used command, which is designed as a powerful wrapper for 
-    "go build" command for convenience cross-compiling usage. 
-    It provides much more features for building binary:
-    1. Cross-Compiling for many platforms and architectures.
-    2. Configuration file support for compiling.
-    3. Build-In Variables.
+说明
+    "build"命令是最常用的命令，它被设计成为一个强大的"go build"命令的包装器，方便交叉编译使用。
+    它为构建二进制文件提供了更多功能：
+    1. 适用于多种平台和跨平台的编译。
+    2. 配置文件支持编译。
+    3. 内置变量。
 
-PLATFORMS
+平台
     darwin    amd64
     freebsd   386,amd64,arm
     linux     386,amd64,arm,arm64,ppc64,ppc64le,mips,mipsle,mips64,mips64le

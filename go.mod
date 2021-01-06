@@ -9,6 +9,7 @@ require (
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.0-20200322061010-ea0c1cf2f119 // indirect
 	github.com/lib/pq v1.2.0
+	github.com/mattn/go-sqlite3 v1.14.6
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/olekukonko/tablewriter v0.0.4
 	golang.org/x/crypto v0.0.0-20200429183012-4b2356b1ed79 // indirect

@@ -38,33 +38,32 @@ func init() {
 
 var (
 	helpContent = gstr.TrimLeft(`
-USAGE
-    gf COMMAND [ARGUMENT] [OPTION]
+用法
+    gf 命令 [主题] [选项]
 
-COMMAND
-    env        show current Golang environment variables
-    get        install or update GF to system in default...
-    gen        automatically generate go files for ORM models...
-    mod        extra features for go modules...
-    run        running go codes with hot-compiled-like feature...
-    init       create and initialize an empty GF project...
-    help       show more information about a specified command
-    pack       packing any file/directory to a resource file, or a go file...
-    build      cross-building go project for lots of platforms...
-    docker     create a docker image for current GF project...
-    swagger    swagger feature for current project...
-    update     update current gf binary to latest one (might need root/admin permission)
-    install    install gf binary to system (might need root/admin permission)
-    version    show current binary version info
+命令
+    env        显示当前Golang环境变量
+    get        默认情况下将GF安装或更新到系统...
+    gen        自动为ORM模型生成go文件...
+    mod        Go模块的额外功能...
+    run        运行具有类似热编译功能的go代码...
+    init       创建并初始化一个空的GF项目...
+    help       显示有关指定命令的详细信息
+    pack       将任何文件/目录打包到资源文件或go文件中...
+    build      交叉编译跨平台的go项目...
+    docker     为当前的GF项目创建一个docker镜像...
+    swagger    当前项目的swagger功能...
+    update     将当前gf二进制文件更新为最新的（可能需要root/admin权限）
+    install    将gf二进制文件安装到系统（可能需要root/admin权限）
+    version    显示当前二进制版本信息
 
-OPTION
-    -y         all yes for all command without prompt ask 
-    -?,-h      show this help or detail for specified command
-    -v,-i      show version information
+选项
+    -y         所有命令都是"yes"，没有提示询问
+    -?,-h      显示指定命令的帮助或详细信息
+    -v,-i      显示版本信息
 
-ADDITIONAL
-    Use 'gf help COMMAND' or 'gf COMMAND -h' for detail about a command, which has '...' 
-    in the tail of their comments.
+附加
+    使用"gf help 命令"或"gf 命令 -h"获取（注释末尾带有"..."）命令的详细信息，
 `)
 )
 
@@ -121,11 +120,11 @@ func main() {
 		}
 		// No argument or option, do installation checks.
 		if !install.IsInstalled() {
-			mlog.Print("hi, it seams it's the first time you installing gf cli.")
-			s := gcmd.Scanf("do you want to install gf binary to your system? [y/n]: ")
+			mlog.Print("嗨，这似乎是你第一次安装gf cli。")
+			s := gcmd.Scanf("你想要安装gf二进制到你的系统吗？[y/n]: ")
 			if strings.EqualFold(s, "y") {
 				install.Run()
-				gcmd.Scan("press <Enter> to exit...")
+				gcmd.Scan("按<Enter>退出...")
 				return
 			}
 		}
@@ -165,10 +164,10 @@ func version() {
 	if info["git"] == "" {
 		info["git"] = "none"
 	}
-	mlog.Printf(`GoFrame CLI Tool %s, https://goframe.org`, VERSION)
-	mlog.Printf(`Install Path: %s`, gfile.SelfPath())
+	mlog.Printf(`GoFrame CLI工具 %s, https://goframe.org`, VERSION)
+	mlog.Printf(`安装路径：%s`, gfile.SelfPath())
 	if info["gf"] == "" {
-		mlog.Print(`Current is a custom installed version, no installation info.`)
+		mlog.Print(`当前是自定义安装版本，没有安装信息。`)
 		return
 	}
 

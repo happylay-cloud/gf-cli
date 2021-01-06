@@ -29,11 +29,11 @@ func Run() {
 	// Ask where to install.
 	paths := getInstallPathsData()
 	if len(paths) <= 0 {
-		mlog.Printf("no path detected, you can manually install gf by copying the binary to path folder.")
+		mlog.Printf("未检测到路径，您可以通过将二进制文件复制到path文件夹来手动安装gf。")
 		return
 	}
-	mlog.Printf("I found some installable paths for you(from $PATH): ")
-	mlog.Printf("  %2s | %8s | %9s | %s", "Id", "Writable", "Installed", "Path")
+	mlog.Printf("我为您找到了一些可安装的路径（来自$PATH）：")
+	mlog.Printf("  %2s | %4s | %4s | %s", "编号", "可写入", "已安装", "路径")
 
 	// Print all paths status and determine the default selectedID value.
 	var (
@@ -44,7 +44,7 @@ func Run() {
 		if !pathSet.AddIfNotExist(aPath.path) {
 			continue
 		}
-		mlog.Printf("  %2d | %8t | %9t | %s", id, aPath.writable, aPath.installed, aPath.path)
+		mlog.Printf("  %4d | %7t | %7t | %s", id, aPath.writable, aPath.installed, aPath.path)
 		if selectedID == -1 {
 			// Use the previously installed path as the most priority choice.
 			if aPath.installed {
@@ -82,10 +82,10 @@ func Run() {
 
 	if allyes.Check() {
 		// Use the default selectedID.
-		mlog.Printf("please choose one installation destination [default %d]: %d", selectedID, selectedID)
+		mlog.Printf("请选择一个安装目标[默认%d]：%d", selectedID, selectedID)
 	} else {
 		// Get input and update selectedID.
-		input := gcmd.Scanf("please choose one installation destination [default %d]: ", selectedID)
+		input := gcmd.Scanf("请选择一个安装目标[默认%d]：", selectedID)
 		if input != "" {
 			selectedID = gconv.Int(input)
 		}
@@ -93,7 +93,7 @@ func Run() {
 
 	// Check if out of range.
 	if selectedID >= len(paths) || selectedID < 0 {
-		mlog.Printf("invalid install destination Id: %d", selectedID)
+		mlog.Printf("无效的安装编号：%d", selectedID)
 		return
 	}
 
@@ -103,10 +103,10 @@ func Run() {
 	// Install the new binary.
 	err := gfile.CopyFile(gfile.SelfPath(), dstPath.binaryFilePath)
 	if err != nil {
-		mlog.Printf("install gf binary to '%s' failed: %v", dstPath.path, err)
-		mlog.Printf("you can manually install gf by copying the binary to folder: %s", dstPath.path)
+		mlog.Printf("将gf二进制文件安装到 '%s' 失败： %v", dstPath.path, err)
+		mlog.Printf("你可以手动安装gf通过复制二进制文件到文件夹：%s", dstPath.path)
 	} else {
-		mlog.Printf("gf binary is successfully installed to: %s", dstPath.path)
+		mlog.Printf("gf二进制文件已成功安装到：%s", dstPath.path)
 	}
 
 	// Uninstall the old binary.

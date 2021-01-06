@@ -43,26 +43,25 @@ func init() {
 
 func Help() {
 	mlog.Print(gstr.TrimLeft(`
-USAGE
-    gf run FILE [OPTION]
+用法
+    gf run 文件 [选项]
 
-ARGUMENT
-    FILE    building file path.
-    OPTION  the same options as "go run"/"go build" except some options as follows defined
+主题
+    文件 构建文件路径。
+    选项 与"go run"/"go build"有相同的选项，除了以下定义的一些选项。
 
-OPTION
-    -/--args     custom process arguments.
-    -/--swagger  auto parse and pack swagger into packed/data-swagger.go before running. 
+选项
+    -/--args     自定义流程参数。
+    -/--swagger  在运行之前，自动解析并打包swagger到packed/data-swagger.go。
 
-EXAMPLES
+示例
     gf run main.go
     gf run main.go --swagger
     gf run main.go --args "server -p 8080"
     gf run main.go -mod=vendor
 
-DESCRIPTION
-    The "run" command is used for running go codes with hot-compiled-like feature,
-    which compiles and runs the go codes asynchronously when codes change.
+说明
+    "run"命令用于运行具有类似热编译功能的go代码，当代码更改时，它将异步编译并运行代码。
 `))
 }
 
@@ -76,7 +75,7 @@ func Run() {
 	mlog.SetHeaderPrint(true)
 	file := gcmd.GetArg(2)
 	if len(file) < 1 {
-		mlog.Fatal("file path cannot be empty")
+		mlog.Fatal("文件路径不能为空")
 	}
 	app := &App{
 		File: file,

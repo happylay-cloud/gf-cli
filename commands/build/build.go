@@ -72,7 +72,7 @@ func Help() {
     -a, --arch       编译架构，多个以,号分隔，如果是all表示编译所有支持架构。
     -s, --system     编译平台，多个以,号分隔，如果是all表示编译所有支持平台。
     -o, --output     输出的可执行文件路径，当该参数指定时，name和path参数失效，常用于编译单个可执行文件。
-    -p, --path       编译可执行文件存储的目录地址，默认是'./bin'。
+    -p, --path       编译可执行文件存储的目录地址，默认是'./bin'（同时指定 -a -s 参数时生效）。
     -e, --extra      额外自定义的编译参数，会直接传递给go build命令。
     -m, --mod        同go build -mod编译选项，使用"-m none"禁用go module。
     -c, --cgo        是否开启cgo特性，默认是关闭的。如果开启，那么交叉编译可能会有问题。
@@ -130,20 +130,20 @@ func Run() {
 		if gfile.Exists("main.go") {
 			file = "main.go"
 		} else {
-			mlog.Fatal("build file path cannot be empty")
+			mlog.Fatal("构建文件路径不能为空")
 		}
 	}
 	path := getOption(parser, "path", "./bin")
 	name := getOption(parser, "name", gfile.Name(file))
 	if len(name) < 1 || name == "*" {
-		mlog.Fatal("name cannot be empty")
+		mlog.Fatal("name不能为空")
 	}
 	var (
 		mod   = getOption(parser, "mod")
 		extra = getOption(parser, "extra")
 	)
 	if mod != "" && mod != "none" {
-		mlog.Debugf(`mod is %s`, mod)
+		mlog.Debugf(`mod 是 %s`, mod)
 		if extra == "" {
 			extra = fmt.Sprintf(`-mod=%s`, mod)
 		} else {
@@ -192,7 +192,7 @@ func Run() {
 	ldFlags := fmt.Sprintf(`-X 'github.com/gogf/gf/os/gbuild.builtInVarStr=%v'`, getBuildInVarStr())
 
 	// start building
-	mlog.Print("start building...")
+	mlog.Print("开始构建...")
 	if cgoEnabled {
 		genv.Set("CGO_ENABLED", "1")
 	} else {
@@ -246,14 +246,14 @@ func Run() {
 		cmdShow, _ := gregex.ReplaceString(`\s+(-ldflags ".+?")\s+`, " ", cmd)
 		mlog.Print(cmdShow)
 		if result, err := gproc.ShellExec(cmd); err != nil {
-			mlog.Fatalf("build failed: %s%s", result, err.Error())
+			mlog.Fatalf("构建失败：%s%s", result, err.Error())
 		}
 		// single binary building.
 		if len(systemOption) == 0 && len(archOption) == 0 {
 			break
 		}
 	}
-	mlog.Print("done!")
+	mlog.Print("完成!")
 }
 
 // getOption retrieves option value from parser and configuration file.

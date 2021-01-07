@@ -11,4 +11,4 @@ CGO_ENABLED=1 GOOS=linux GOARCH=amd64 CC=x86_64-linux-musl-gcc CGO_LDFLAGS="-sta
 CGO_ENABLED=1 GOOS=windows GOARCH=amd64 CC=x86_64-w64-mingw32-gcc go build -v -o gfctl-1.15.0.2.mine-windows-amd64.exe
 
 # 编译mac
-CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 go build -o gfctl-1.15.0.2.mine-darwin-amd64
+CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 go build -o gfctl

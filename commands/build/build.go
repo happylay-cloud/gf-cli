@@ -76,6 +76,8 @@ func Help() {
     -e, --extra      额外自定义的编译参数，会直接传递给go build命令。
     -m, --mod        同go build -mod编译选项，使用"-m none"禁用go module。
     -c, --cgo        是否开启cgo特性，默认是关闭的。如果开启，那么交叉编译可能会有问题。
+    --CC             开启交叉编译，参数CC（linux推荐CC=x86_64-linux-musl-gcc，windows推荐CC=x86_64-w64-mingw32-gcc）。
+    --CGO_LDFLAGS    开启交叉编译，参数CGO_LDFLAGS（linux推荐CGO_LDFLAGS="-static"，windows无此参数）。
     --pack           go打包前，将需要打包的目录，多个以,号分隔，生成到packed/data.go。
     --swagger        go打包前，自动解析并将swagger打包到pack/swagger中。
 
@@ -88,6 +90,21 @@ func Help() {
     gf build main.go -n my-app -a all -s all
     gf build main.go -n my-app -a amd64,386 -s linux -p .
     gf build main.go -n my-app -v 1.0 -a amd64,386 -s linux,windows,darwin -p ./docker/bin
+
+开启cgo特性，交叉编译示例（注意需要提前安装相关依赖，由于参数不同，需要分开编译）
+
+    1、安装交叉编译工具（mac示例）
+    brew install mingw-w64
+    brew install FiloSottile/musl-cross/musl-cross
+
+    2、linux_amd64环境
+    gfctl build main.go --cgo --CC=x86_64-linux-musl-gcc --CGO_LDFLAGS="-static" --name gfctl --arch amd64 --system linux --version 1.15.0
+    
+    3、windows_amd64环境
+    gfctl build main.go --cgo --CC=x86_64-w64-mingw32-gcc --name gfctl --arch amd64 --system windows --version 1.15.0
+    
+    4、mac_amd64环境
+    gfctl build main.go --cgo --name gfctl --arch amd64 --system darwin --version 1.15.0
 
 说明
     "build"命令是最常用的命令，它被设计成为一个强大的"go build"命令的包装器，方便交叉编译使用。
@@ -109,17 +126,19 @@ func Help() {
 func Run() {
 	mlog.SetHeaderPrint(true)
 	parser, err := gcmd.Parse(g.MapStrBool{
-		"n,name":    true,
-		"v,version": true,
-		"a,arch":    true,
-		"s,system":  true,
-		"o,output":  true,
-		"p,path":    true,
-		"e,extra":   true,
-		"m,mod":     true,
-		"pack":      true,
-		"c,cgo":     false,
-		"swagger":   false,
+		"n,name":      true,
+		"v,version":   true,
+		"a,arch":      true,
+		"s,system":    true,
+		"o,output":    true,
+		"p,path":      true,
+		"e,extra":     true,
+		"m,mod":       true,
+		"pack":        true,
+		"c,cgo":       false,
+		"CC":          false, // cgo交叉编译环境变量CC
+		"CGO_LDFLAGS": false, // cgo交叉编译环境变量CGO_LDFLAGS
+		"swagger":     false,
 	})
 	if err != nil {
 		mlog.Fatal(err)
@@ -152,6 +171,8 @@ func Run() {
 	}
 	var (
 		cgoEnabled   = gconv.Bool(getOption(parser, "cgo"))
+		CC           = getOption(parser, "CC")
+		cgoLDFLAGS   = getOption(parser, "CGO_LDFLAGS")
 		version      = getOption(parser, "version")
 		outputPath   = getOption(parser, "output")
 		archOption   = getOption(parser, "arch")
@@ -194,7 +215,18 @@ func Run() {
 	// start building
 	mlog.Print("开始构建...")
 	if cgoEnabled {
+		// 开启交叉编译
 		genv.Set("CGO_ENABLED", "1")
+
+		// 交叉编译参数CC
+		if CC != "" {
+			genv.Set("CC", CC)
+		}
+		// 交叉编译参数CGO_LDFLAGS
+		if cgoLDFLAGS != "" {
+			genv.Set("CGO_LDFLAGS", cgoLDFLAGS)
+		}
+
 	} else {
 		genv.Set("CGO_ENABLED", "0")
 	}

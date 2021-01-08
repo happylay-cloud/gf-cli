@@ -8,9 +8,18 @@ import (
 )
 
 func Help() {
-	mlog.Print(gstr.TrimLeft(`
+	switch gcmd.GetArg(2) {
+	case "dao":
+		HelpDao()
+	case "model":
+		HelpModel()
+	default:
+		mlog.Print(gstr.TrimLeft(`
+USAGE 
+    gf gen TYPE [OPTION] 
+
 用法 
-    gf gen 类型 [选项]
+    gf gen 类型 [选项]    
 
 类型
     dao     生成dao和model文件。
@@ -53,7 +62,14 @@ func Help() {
 
 说明
     "gen"命令具有多种用途。它目前支持为ORM模型生成go文件。
+
+DESCRIPTION
+    The "gen" command is designed for multiple generating purposes. 
+    It's currently supporting generating go files for ORM models.
+    Please use "gf gen dao -h" or "gf gen model -h" for specified type help.
+
 `))
+	}
 }
 
 func Run() {

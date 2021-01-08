@@ -54,8 +54,8 @@ const platforms = `
 `
 
 const (
-	nodeNameInConfigFile = "gfcli.build" // nodeNameInConfigFile is the node name for compiler configurations in configuration file.
-	packedGoFileName     = "data.go"     // packedGoFileName specifies the file name for packing common folders into one single go file.
+	nodeNameInConfigFile = "gfcli.build"        // nodeNameInConfigFile is the node name for compiler configurations in configuration file.
+	packedGoFileName     = "build_pack_data.go" // packedGoFileName specifies the file name for packing common folders into one single go file.
 )
 
 func Help() {
@@ -204,7 +204,15 @@ func Run() {
 
 	// Auto packing.
 	if len(packStr) > 0 {
-		packCmd := fmt.Sprintf(`gf pack %s packed/%s`, packStr, packedGoFileName)
+		dataFilePath := fmt.Sprintf(`packed/%s`, packedGoFileName)
+		if !gfile.Exists(dataFilePath) {
+			// Remove the go file that is automatically packed resource.
+			defer func() {
+				gfile.Remove(dataFilePath)
+				mlog.Printf(`remove the automatically generated resource go file: %s`, dataFilePath)
+			}()
+		}
+		packCmd := fmt.Sprintf(`gf pack %s %s`, packStr, dataFilePath)
 		mlog.Print(packCmd)
 		gproc.ShellRun(packCmd)
 	}

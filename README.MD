@@ -19,34 +19,40 @@
     ```
    > 如果使用的是`zsh`，你可以通过`alias gf=gf`命令重命名别名，来解决`gf`和`git fetch`直接的冲突。
                                                                                                                           
-1. `Linux` 
+2. `Linux` 
     ```shell
     wget https://goframe.org/cli/linux_amd64/gf && chmod +x gf && ./gf install
     ```
                                                                                                                   
-1. `Windows`
+3. `Windows`
 
     手动下载并执行，然后按照说明进行操作。
 
 ### 2). 手动安装
 
-> 您可能需要设置goproxy才能完成构建。
+> 您可能需要设置GOPROXY才能完成构建。
 
 1. 最新版本
     ```
     git clone https://github.com/gogf/gf-cli 
     cd gf-cli && go build main.go && ./main install
     ```
-1. 指定版本
+   
+2. 指定版本
     ```
     git clone --branch v0.7.3 https://github.com/gogf/gf-cli 
     cd gf-cli && go build main.go && ./main install
     ```
-1. 默认情况下，`gf gen model`命令不支持数据库`sqlite`和`oracle`，因为它需要`cgo`和`gcc`，你可以手动更改源代码并进行构建。
+   
+3. 默认情况下，`gf gen model`命令不支持数据库`sqlite`和`oracle`，因为它需要`cgo`和`gcc`，你可以手动更改源代码并进行构建。
+
+
+4. 当前分支发行版gfctl已预编译sqlite包，支持中文显示，与主库分支同步。
 
 ## 2. 命令
 ```html
 $ gf
+
 用法
     gf 命令 [主题] [选项]
 
@@ -54,7 +60,7 @@ $ gf
     env        显示当前Golang环境变量
     get        默认情况下安装或更新GF到系统...
     gen        自动为ORM模型生成go文件...
-    mod        go模块的附加功能...
+    mod        Go模块的附加功能...
     run        运行具有类似热编译功能的go代码...
     init       在当前工作目录中初始化空GF项目...
     help       显示有关指定命令的详细信息

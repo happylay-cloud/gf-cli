@@ -47,7 +47,7 @@
 3. 默认情况下，`gf gen model`命令不支持数据库`sqlite`和`oracle`，因为它需要`cgo`和`gcc`，你可以手动更改源代码并进行构建。
 
 
-4. 当前分支发行版gfctl已预编译sqlite包，支持中文显示，与主库分支同步。
+4. 当前mine分支发行版 [gfctl](https://github.com/happylay-cloud/gf-cli/releases) 已预编译sqlite包，支持中文显示，与主库分支同步。
 
 ## 2. 命令
 ```html

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=1.15.0.3.mine
+VERSION=1.15.1.0.mine
 
 # linux_amd64环境
 ./gfctl build main.go --cgo --CC=x86_64-linux-musl-gcc --CGO_LDFLAGS="-static" --name gfctl --arch amd64 --system linux --version $VERSION

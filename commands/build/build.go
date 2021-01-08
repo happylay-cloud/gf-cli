@@ -209,7 +209,7 @@ func Run() {
 			// Remove the go file that is automatically packed resource.
 			defer func() {
 				gfile.Remove(dataFilePath)
-				mlog.Printf(`remove the automatically generated resource go file: %s`, dataFilePath)
+				mlog.Printf(`删除自动生成的go资源文件：%s`, dataFilePath)
 			}()
 		}
 		packCmd := fmt.Sprintf(`gf pack %s %s`, packStr, dataFilePath)

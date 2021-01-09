@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gogf/gf-cli/commands/env"
+	"github.com/gogf/gf-cli/commands/init/mine"
 	"github.com/gogf/gf-cli/commands/mod"
 	"github.com/gogf/gf/errors/gerror"
 	"strings"
@@ -49,6 +50,7 @@ var (
     mod        Go模块的额外功能...
     run        运行具有类似热编译功能的go代码...
     init       创建并初始化一个空的GF项目...
+    init@mine  创建并初始化一个工程化的GF项目...
     help       显示有关指定命令的详细信息
     pack       将任何文件/目录打包到资源文件或go文件中...
     build      交叉编译跨平台的go项目...
@@ -104,6 +106,8 @@ func main() {
 		mod.Run()
 	case "init":
 		initialize.Run()
+	case "init@mine":// 初始化gfctl项目-工程化目录结构
+		mine.Run()
 	case "pack":
 		pack.Run()
 	case "docker":
@@ -152,6 +156,8 @@ func help(command string) {
 		gen.Help()
 	case "init":
 		initialize.Help()
+	case "init@mine": // gfctl init@mine 帮助说明
+		mine.Help()
 	case "docker":
 		docker.Help()
 	case "swagger":

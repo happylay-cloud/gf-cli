@@ -87,6 +87,28 @@ $ gf
 
 请使用`ulimit -n 65535`来扩大当前终端shell会话的最大打开文件数的系统配置，然后使用`gf run`。
 
+### 2). windows平台下git bash中文乱码
+
+ >1. 打开git bash控制台，设置完后关闭，字符集必须是GBK。
+
+    鼠标右键选择选项（Options）
+
+    选项（Options） => 窗口（Window） => 界面语言（UI language）（zh_CN）
+
+    选项（Options） => 文本（Text） => 本地（Locale）（zh_CN）字符集（Character set）（GBK）
+
+ >2. 打开git bash控制台，设置UTF-8字符集，即可解决中文乱码。
+    
+    鼠标右键选择选项（Options）
+    
+    选项（Options） => 窗口（Window） => 界面语言（UI language）（zh_CN）
+    
+    选项（Options） => 文本（Text） => 本地（Locale）（zh_CN）字符集（Character set）（UTF-8）
+ 
+ >3. 经过测试以上方法需要重新执行，且必须保证`关闭控制台时字符集为GBK`，`打开控制台时字符集为UTF-8`才能正确显示中文，
+
+    其余方法均无效，无需尝试，这应为git bash存在的bug，故不建议使用git bash，windows自带的控制台中文显示正常， 推荐使用。
+
 
 
 

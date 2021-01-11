@@ -1,21 +1,21 @@
 package main
 
 import (
+	_ "github.com/gogf/gf-cli/boot"
+
 	"fmt"
-	"github.com/gogf/gf-cli/commands/env"
-	"github.com/gogf/gf-cli/commands/init/mine"
-	"github.com/gogf/gf-cli/commands/mod"
-	"github.com/gogf/gf/errors/gerror"
 	"strings"
 
-	_ "github.com/gogf/gf-cli/boot"
 	"github.com/gogf/gf-cli/commands/build"
 	"github.com/gogf/gf-cli/commands/docker"
+	"github.com/gogf/gf-cli/commands/env"
 	"github.com/gogf/gf-cli/commands/fix"
 	"github.com/gogf/gf-cli/commands/gen"
 	"github.com/gogf/gf-cli/commands/get"
+	"github.com/gogf/gf-cli/commands/init/mine"
 	"github.com/gogf/gf-cli/commands/initialize"
 	"github.com/gogf/gf-cli/commands/install"
+	"github.com/gogf/gf-cli/commands/mod"
 	"github.com/gogf/gf-cli/commands/pack"
 	"github.com/gogf/gf-cli/commands/run"
 	"github.com/gogf/gf-cli/commands/swagger"
@@ -23,6 +23,7 @@ import (
 	"github.com/gogf/gf-cli/library/allyes"
 	"github.com/gogf/gf-cli/library/mlog"
 	"github.com/gogf/gf-cli/library/proxy"
+	"github.com/gogf/gf/errors/gerror"
 	"github.com/gogf/gf/os/gbuild"
 	"github.com/gogf/gf/os/gcmd"
 	"github.com/gogf/gf/os/gfile"

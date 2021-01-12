@@ -124,7 +124,7 @@ func generateSwaggerFiles(output string, pack bool) error {
 		return errors.New(result + err.Error())
 	}
 	if !gfile.Exists(gfile.Join(tempOutputPath, "swagger.json")) {
-		return errors.New("make swagger files failed")
+		return errors.New("生成swagger文件失败")
 	}
 	if !gfile.Exists(output) {
 		gfile.Mkdir(output)
@@ -138,7 +138,7 @@ func generateSwaggerFiles(output string, pack bool) error {
 	mlog.Print(`完成！`)
 	// Auto pack into go file.
 	if pack && gfile.Exists("swagger") {
-		packCmd := fmt.Sprintf(`gf pack %s packed/%s -n packed`, "swagger", PackedGoFileName)
+		packCmd := fmt.Sprintf(`gfctl pack %s packed/%s -n packed`, "swagger", PackedGoFileName)
 		mlog.Print(packCmd)
 		if err := gproc.ShellRun(packCmd); err != nil {
 			return err

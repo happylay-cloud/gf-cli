@@ -79,7 +79,7 @@ func Help() {
     --CC             开启交叉编译，参数CC（linux推荐CC=x86_64-linux-musl-gcc，windows推荐CC=x86_64-w64-mingw32-gcc）。
     --CGO_LDFLAGS    开启交叉编译，参数CGO_LDFLAGS（linux推荐CGO_LDFLAGS="-static"，windows无此参数）。
     --pack           go打包前，将需要打包的目录，多个以,号分隔，生成到packed/data.go。
-    --swagger        go打包前，自动解析并将swagger打包到pack/swagger中。
+    --swagger        go打包前，自动解析并打包swagger到packed/swagger.go中。
 
 示例
     gf build main.go
@@ -190,11 +190,11 @@ func Run() {
 
 	// Auto swagger.
 	if containsOption(parser, "swagger") {
-		if err := gproc.ShellRun(`gf swagger`); err != nil {
+		if err := gproc.ShellRun(`gfctl swagger`); err != nil {
 			return
 		}
 		if gfile.Exists("swagger") {
-			packCmd := fmt.Sprintf(`gf pack %s packed/%s`, "swagger", packedGoFileName)
+			packCmd := fmt.Sprintf(`gfctl pack %s packed/%s`, "swagger", packedGoFileName)
 			mlog.Print(packCmd)
 			if err := gproc.ShellRun(packCmd); err != nil {
 				return
@@ -212,7 +212,7 @@ func Run() {
 				mlog.Printf(`删除自动生成的go资源文件：%s`, dataFilePath)
 			}()
 		}
-		packCmd := fmt.Sprintf(`gf pack %s %s`, packStr, dataFilePath)
+		packCmd := fmt.Sprintf(`gfctl pack %s %s`, packStr, dataFilePath)
 		mlog.Print(packCmd)
 		gproc.ShellRun(packCmd)
 	}

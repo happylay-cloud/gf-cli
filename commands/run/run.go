@@ -139,7 +139,7 @@ func Run() {
 		// With some delay in case of multiple code changes in very short interval.
 		gtimer.SetTimeout(1500*gtime.MS, func() {
 			defer dirty.Set(false)
-			mlog.Printf(`go file changes: %s`, event.String())
+			mlog.Printf(`go文件变动：%s`, event.String())
 			app.Run()
 		})
 	})
@@ -153,7 +153,7 @@ func Run() {
 func (app *App) Run() {
 	// Rebuild and run the codes.
 	renamePath := ""
-	mlog.Printf("build: %s", app.File)
+	mlog.Printf("构建：%s", app.File)
 	outputPath := gfile.Join("bin", gfile.Name(app.File))
 	if runtime.GOOS == "windows" {
 		outputPath += ".exe"
@@ -166,11 +166,11 @@ func (app *App) Run() {
 	}
 	// Auto swagger.
 	if app.Swagger {
-		if err := gproc.ShellRun(`gf swagger`); err != nil {
+		if err := gproc.ShellRun(`gfctl swagger`); err != nil {
 			return
 		}
 		if gfile.Exists("swagger") {
-			packCmd := fmt.Sprintf(`gf pack %s packed/%s -n packed -y`, "swagger", swagger.PackedGoFileName)
+			packCmd := fmt.Sprintf(`gfctl pack %s packed/%s -n packed -y`, "swagger", swagger.PackedGoFileName)
 			mlog.Print(packCmd)
 			if err := gproc.ShellRun(packCmd); err != nil {
 				return
@@ -183,13 +183,13 @@ func (app *App) Run() {
 	mlog.Print(buildCommand)
 	result, err := gproc.ShellExec(buildCommand)
 	if err != nil {
-		mlog.Printf("build error: \n%s%s", result, err.Error())
+		mlog.Printf("构建错误：\n%s%s", result, err.Error())
 		return
 	}
 	// Kill the old process if build successfully.
 	if process != nil {
 		if err := process.Kill(); err != nil {
-			mlog.Debugf("kill process error: %s", err.Error())
+			mlog.Debugf("终止进程错误：%s", err.Error())
 			//return
 		}
 	}
@@ -204,8 +204,8 @@ func (app *App) Run() {
 		process = gproc.NewProcessCmd(runCommand, nil)
 	}
 	if pid, err := process.Start(); err != nil {
-		mlog.Printf("build running error: %s", err.Error())
+		mlog.Printf("即时编译运行错误：%s", err.Error())
 	} else {
-		mlog.Printf("build running pid: %d", pid)
+		mlog.Printf("即时编译运行进程编号pid：%d", pid)
 	}
 }

@@ -11,7 +11,7 @@ import (
 	"{TplImportPrefix}/model/internal"
 )
 
-// {TplTableNameCamelCase}是{TplTableName}表的golang结构体。
+// {TplTableNameCamelCase} 是{TplTableName}表的golang结构体。
 type {TplTableNameCamelCase} internal.{TplTableNameCamelCase}
 
 // 在下面填充你的想法。
@@ -26,6 +26,6 @@ package internal
 
 {TplPackageImports}
 
-// {TplTableNameCamelCase}是{TplTableName}表的golang结构体。
+// {TplTableNameCamelCase} 是{TplTableName}表的golang结构体。
 {TplStructDefine}
 `

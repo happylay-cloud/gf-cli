@@ -11,14 +11,14 @@ import (
 	"{TplImportPrefix}/dao/internal"
 )
 
-// {TplTableNameCamelLowerCase}Dao是访问逻辑模型数据和自定义数据操作函数的管理器。
+// {TplTableNameCamelLowerCase}Dao 是访问逻辑模型数据和自定义数据操作函数的管理器。
 // 您可以根据需要定义方法以扩展其功能。
 type {TplTableNameCamelLowerCase}Dao struct {
 	*internal.{TplTableNameCamelCase}Dao
 }
 
 var (
-	// {TplTableNameCamelCase}是全局公开可访问的对象，用于操作{TplTableName}表。
+	// {TplTableNameCamelCase} 是全局公开可访问的对象，用于操作{TplTableName}表。
 	{TplTableNameCamelCase} = &{TplTableNameCamelLowerCase}Dao{
 		internal.{TplTableNameCamelCase},
 	}
@@ -46,20 +46,20 @@ import (
 	"{TplImportPrefix}/model"
 )
 
-// {TplTableNameCamelCase}Dao是访问逻辑模型数据和自定义数据操作函数的管理器。
+// {TplTableNameCamelCase}Dao 是访问逻辑模型数据和自定义数据操作函数的管理器。
 type {TplTableNameCamelCase}Dao struct {
 	gmvc.M
 	Table   string
 	Columns {TplTableNameCamelLowerCase}Columns
 }
 
-// {TplTableNameCamelCase}定义列并存储{TplTableName}表的列名。
+// {TplTableNameCamelCase} 定义列并存储{TplTableName}表的列名。
 type {TplTableNameCamelLowerCase}Columns struct {
 	{TplColumnDefine}
 }
 
 var (
-	// {TplTableNameCamelCase}是全局公开可访问的对象，用于操作{TplTableName}表。
+	// {TplTableNameCamelCase} 是全局公开可访问的对象，用于操作{TplTableName}表。
 	{TplTableNameCamelCase} = &{TplTableNameCamelCase}Dao{
 		M:     g.DB("{TplGroupName}").Model("{TplTableName}").Safe(),
 		Table: "{TplTableName}",
@@ -69,7 +69,7 @@ var (
 	}
 )
 
-// Ctx是一个链式函数，它创建并返回一个新的数据库，该数据库是当前数据库对象的浅拷贝副本，其中包含给定的上下文。
+// Ctx 是一个链式函数，它创建并返回一个新的数据库，该数据库是当前数据库对象的浅拷贝副本，其中包含给定的上下文。
 // 请注意，此函数返回的数据库对象只能使用一次，因此请勿将其分配给全局变量或包变量长时间使用。
 func (d *{TplTableNameCamelCase}Dao) Ctx(ctx context.Context) *{TplTableNameCamelCase}Dao {
 	return &{TplTableNameCamelCase}Dao{M: d.M.Ctx(ctx)}
@@ -262,7 +262,7 @@ func (d *{TplTableNameCamelCase}Dao) All(where ...interface{}) ([]*model.{TplTab
 	return entities, nil
 }
 
-// 从表中查询一条记录，并以*model.{TplTableNameCamelCase}的形式返回结果。
+// One 从表中查询一条记录，并以*model.{TplTableNameCamelCase}的形式返回结果。
 // 如果没有从表中查询到给定条件的记录，则返回nil。
 //
 // 可选参数 <where> 与 M.Where 函数参数相同，参照 M.Where。

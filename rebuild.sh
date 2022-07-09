@@ -1,5 +1,7 @@
 #!/bin/sh
 
+go mod tidy
+
 VERSION=1.15.1.5.mine
 
 # 编译mac

@@ -1,6 +1,9 @@
 #!/bin/sh
 
-VERSION=1.15.1.4.mine
+VERSION=1.15.1.5.mine
+
+# 编译mac
+CGO_ENABLED=1 GOOS=darwin GOARCH=amd64 go build -o gfctl
 
 # linux_amd64环境
 ./gfctl build main.go --cgo --CC=x86_64-linux-musl-gcc --CGO_LDFLAGS="-static" --name gfctl --arch amd64 --system linux --version $VERSION
